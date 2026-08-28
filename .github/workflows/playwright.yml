@@ -58,6 +58,7 @@ jobs:
           name: reporte-ejecutivo
           path: |
             test-results/executive-summary.md
+            test-results/executive-report/
             test-results/junit.xml
           if-no-files-found: ignore
           retention-days: 14
