@@ -1,0 +1,23 @@
+{
+  "name": "orangehrm-playwright-automation",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Proyecto de automatización de OrangeHRM con Playwright y TypeScript",
+  "engines": {
+    "node": ">=20"
+  },
+  "scripts": {
+    "test": "playwright test",
+    "test:headed": "playwright test --headed",
+    "test:debug": "playwright test --debug",
+    "test:ui": "playwright test --ui",
+    "report": "playwright show-report",
+    "typecheck": "tsc --noEmit"
+  },
+  "devDependencies": {
+    "@playwright/test": "1.62.1",
+    "@types/node": "24.3.0",
+    "dotenv": "16.6.1",
+    "typescript": "5.9.2"
+  }
+}
