@@ -11,6 +11,7 @@ export default defineConfig({
   reporter: [
     ['line'],
     ['junit', { outputFile: 'test-results/junit.xml' }],
+    ['json', { outputFile: 'test-results/results.json' }],
     ['html', { open: 'never' }],
   ],
   use: {

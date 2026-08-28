@@ -12,6 +12,7 @@
     "test:debug": "playwright test --debug",
     "test:ui": "playwright test --ui",
     "report": "playwright show-report",
+    "report:executive": "node scripts/generate-executive-report.mjs",
     "typecheck": "tsc --noEmit"
   },
   "devDependencies": {
