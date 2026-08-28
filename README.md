@@ -46,6 +46,10 @@ npm run report
 npm run report:executive
 ```
 
+El reporte ejecutivo web se genera en
+`test-results/executive-report/index.html` con métricas, estado general y el
+detalle de cada escenario.
+
 Las variables `ORANGEHRM_BASE_URL`, `ORANGEHRM_USERNAME` y
 `ORANGEHRM_PASSWORD` pueden modificarse en `.env`. Los valores incluidos son
 credenciales públicas del entorno de demostración; para otros ambientes se
@@ -69,7 +73,7 @@ GitHub Actions ejecuta el pipeline en cambios y pull requests hacia `main`, y
 también permite iniciarlo manualmente. Instala Node.js y Chromium, valida
 TypeScript, ejecuta las pruebas y publica:
 
-- resumen ejecutivo en la página de la ejecución y como artefacto;
+- resumen ejecutivo en la página de la ejecución y dashboard web como artefacto;
 - resultados JUnit dentro del artefacto ejecutivo;
 - reporte HTML;
 - capturas, videos y traces cuando existe un fallo.
