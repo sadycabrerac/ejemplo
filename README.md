@@ -2,14 +2,14 @@
 
 Proyecto de ejemplo para automatizar el inicio de sesión de
 [OrangeHRM Demo](https://opensource-demo.orangehrmlive.com/) con Playwright,
-TypeScript y Azure Pipelines.
+TypeScript y GitHub Actions.
 
 ## Escenarios incluidos
 
 - Inicio de sesión exitoso con las credenciales públicas de demostración.
 - Validación del mensaje para credenciales inválidas.
 - Evidencias automáticas cuando falla una prueba: captura, video y trace.
-- Reportes HTML y JUnit.
+- Reportes HTML, JUnit y resumen ejecutivo.
 
 ## Requisitos
 
@@ -41,6 +41,9 @@ npm run typecheck
 
 # Abrir el último reporte HTML
 npm run report
+
+# Generar el resumen ejecutivo
+npm run report:executive
 ```
 
 Las variables `ORANGEHRM_BASE_URL`, `ORANGEHRM_USERNAME` y
@@ -54,16 +57,19 @@ deben configurar variables seguras en el pipeline.
 .
 ├── pages/                  # Page Objects
 ├── tests/                  # Especificaciones Playwright
-├── azure-pipelines.yml     # Pipeline CI
+├── scripts/                # Generación del resumen ejecutivo
+├── .github/workflows/      # Pipeline de GitHub Actions
 ├── playwright.config.ts    # Configuración de pruebas y reportes
 └── tsconfig.json           # Configuración TypeScript
 ```
 
 ## Pipeline
 
-El pipeline se ejecuta en cambios y pull requests hacia `main`. Instala Node.js
-y Chromium, valida TypeScript, ejecuta las pruebas y publica:
+GitHub Actions ejecuta el pipeline en cambios y pull requests hacia `main`, y
+también permite iniciarlo manualmente. Instala Node.js y Chromium, valida
+TypeScript, ejecuta las pruebas y publica:
 
-- resultados JUnit;
+- resumen ejecutivo en la página de la ejecución y como artefacto;
+- resultados JUnit dentro del artefacto ejecutivo;
 - reporte HTML;
-- capturas, videos y traces disponibles en `test-results`.
+- capturas, videos y traces cuando existe un fallo.

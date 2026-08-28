@@ -1,0 +1,81 @@
+name: Pruebas OrangeHRM
+
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+    branches:
+      - main
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: playwright-${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  playwright:
+    name: Playwright en Chromium
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+
+    steps:
+      - name: Descargar repositorio
+        uses: actions/checkout@v4
+
+      - name: Configurar Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: npm
+
+      - name: Instalar dependencias
+        run: npm ci
+
+      - name: Instalar Chromium
+        run: npx playwright install --with-deps chromium
+
+      - name: Validar TypeScript
+        run: npm run typecheck
+
+      - name: Ejecutar pruebas Playwright
+        id: tests
+        run: npm test
+
+      - name: Generar resumen ejecutivo
+        if: always()
+        run: |
+          npm run report:executive
+          cat test-results/executive-summary.md >> "$GITHUB_STEP_SUMMARY"
+
+      - name: Publicar reporte ejecutivo
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: reporte-ejecutivo
+          path: |
+            test-results/executive-summary.md
+            test-results/junit.xml
+          if-no-files-found: ignore
+          retention-days: 14
+
+      - name: Publicar reporte HTML
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: reporte-playwright
+          path: playwright-report/
+          if-no-files-found: ignore
+          retention-days: 14
+
+      - name: Publicar evidencias de fallos
+        if: failure()
+        uses: actions/upload-artifact@v4
+        with:
+          name: evidencias-playwright
+          path: test-results/artifacts/
+          if-no-files-found: ignore
+          retention-days: 14
